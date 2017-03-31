@@ -19,7 +19,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String COLUMN_RATING = "rating";     // the rating column for each comment
 
     private static final String DATABASE_NAME = "commments.db";  // the name of the database
-    private static final int DATABASE_VERSION = 1;               // the version of the database
+    private static final int DATABASE_VERSION = 2;               // the version of the database
 
     /**
      * Create Table command

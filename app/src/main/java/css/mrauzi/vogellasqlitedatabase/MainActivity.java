@@ -7,18 +7,19 @@ import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 
-/**
- * MainActivity -
- */
+
 public class MainActivity extends ListActivity {
     private CommentsDataSource datasource;  // instance of the CommentsDataSource data access object class for the database
+    EditText etRating;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        etRating = (EditText)findViewById(R.id.editTextRating);
         datasource = new CommentsDataSource(this);
         datasource.open();  // opens the database
 
@@ -46,7 +47,8 @@ public class MainActivity extends ListActivity {
                 String[] comments = new String[] { "Cool", "Very nice", "Hate it" };
                 int nextInt = new Random().nextInt(3);
                 // save the new comment to the database
-                comment = datasource.createComment(comments[nextInt]);
+                String userRating = etRating.getText().toString();
+                comment = datasource.createComment(comments[nextInt], userRating);
                 adapter.add(comment);
                 break;
             case R.id.delete:

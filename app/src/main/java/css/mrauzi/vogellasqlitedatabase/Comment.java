@@ -9,7 +9,23 @@ package css.mrauzi.vogellasqlitedatabase;
 public class Comment {
     private long id;  // the id of the comment
     private String comment;  // the string of the comment itself
+    private String rating;   // the string rating of the comment
 
+    /**
+     * getRating() - returns the rating of the comment
+     * @return the rating of the comment
+     */
+    public String getRating() {
+        return rating;
+    }
+
+    /**
+     * setRating() - sets the rating for the comment
+     * @param rating the rating of the comment
+     */
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
 
     /**
      * getId() - returns the id of the comment
@@ -50,6 +66,6 @@ public class Comment {
     // Will be used by the ArrayAdapter in the ListView
     @Override
     public String toString() {
-        return comment;
+        return comment + " Rating: " + rating;
     }
 }

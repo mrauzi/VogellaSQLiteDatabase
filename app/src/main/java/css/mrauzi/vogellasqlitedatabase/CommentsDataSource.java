@@ -20,7 +20,7 @@ public class CommentsDataSource {
     private SQLiteDatabase database;  // instance of the database
     private MySQLiteHelper dbHelper;  // instance of the database helper class
     private String[] allColumns = { MySQLiteHelper.COLUMN_ID,  // string array of all the columns in the database
-            MySQLiteHelper.COLUMN_COMMENT };
+            MySQLiteHelper.COLUMN_COMMENT, MySQLiteHelper.COLUMN_RATING };
 
     /**
      * CommentsDataSource() - constructor for CommentsDataSource class
@@ -49,10 +49,11 @@ public class CommentsDataSource {
      * @param comment the comment string to be added
      * @return returns the comment that was created
      */
-    public Comment createComment(String comment) {
+    public Comment createComment(String comment, String rating) {
         // stores the new values into a ContentValues object
         ContentValues values = new ContentValues();
         values.put(MySQLiteHelper.COLUMN_COMMENT, comment);
+        values.put(MySQLiteHelper.COLUMN_RATING, rating);
         // insert command into the table
         // SQL insert - insert(String table, String nullColumnHack, ContentValues values)
         // INSERT INTO table_name (column1, column2, column3, ...)
@@ -94,7 +95,7 @@ public class CommentsDataSource {
         // query the database to for all of the field for all of the records in the comment table
         // query(String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy, String limit)
         Cursor cursor = database.query(MySQLiteHelper.TABLE_COMMENTS,
-                allColumns, null, null, null, null, null);
+                null, null, null, null, null, null);
 
         cursor.moveToFirst();
         // loop through the cursor converting each row into a comment object and adding to the list of comments
@@ -117,6 +118,7 @@ public class CommentsDataSource {
         Comment comment = new Comment();
         comment.setId(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.COLUMN_ID)));
         comment.setComment(cursor.getString(1));
+        comment.setRating(cursor.getString(cursor.getColumnIndex(MySQLiteHelper.COLUMN_RATING)));
         return comment;
     }
 }
