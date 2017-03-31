@@ -13,6 +13,7 @@ import android.widget.EditText;
 public class MainActivity extends ListActivity {
     private CommentsDataSource datasource;  // instance of the CommentsDataSource data access object class for the database
     EditText etRating;
+    EditText etComment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -20,6 +21,7 @@ public class MainActivity extends ListActivity {
         setContentView(R.layout.activity_main);
 
         etRating = (EditText)findViewById(R.id.editTextRating);
+        etComment = (EditText)findViewById(R.id.editTextComment);
         datasource = new CommentsDataSource(this);
         datasource.open();  // opens the database
 
@@ -44,11 +46,12 @@ public class MainActivity extends ListActivity {
         switch (view.getId()) {
             // allows user to add a comment to the comment
             case R.id.add:
-                String[] comments = new String[] { "Cool", "Very nice", "Hate it" };
-                int nextInt = new Random().nextInt(3);
+                //String[] comments = new String[] { "Cool", "Very nice", "Hate it" };
+                //int nextInt = new Random().nextInt(3);
+                String comments = etComment.getText().toString();
                 // save the new comment to the database
                 String userRating = etRating.getText().toString();
-                comment = datasource.createComment(comments[nextInt], userRating);
+                comment = datasource.createComment(comments, userRating);
                 adapter.add(comment);
                 break;
             case R.id.delete:
