@@ -16,6 +16,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String TABLE_COMMENTS = "comments";  // the name of the "comments" table
     public static final String COLUMN_ID = "_id";            // the id(primary key) column for each record
     public static final String COLUMN_COMMENT = "comment";   // the comment column for each comment
+    public static final String COLUMN_RATING = "rating";     // the rating column for each comment
 
     private static final String DATABASE_NAME = "commments.db";  // the name of the database
     private static final int DATABASE_VERSION = 1;               // the version of the database
@@ -33,7 +34,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     private static final String DATABASE_CREATE = "create table "
             + TABLE_COMMENTS + "( " + COLUMN_ID
             + " integer primary key autoincrement, " + COLUMN_COMMENT
-            + " text not null);";
+            + " text not null, " + COLUMN_RATING + " text);";
 
     /**
      * MySQLiteHelper() - constructor for the database helper class

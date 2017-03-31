@@ -23,6 +23,21 @@
             android:text="Delete First"
             android:onClick="onClick"/>
 
+        <TextView
+            android:text="Rating: "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewRating"
+            android:layout_weight="1" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:id="@+id/editTextRating"
+            android:layout_weight="1"
+            android:inputType="text" />
+
     </LinearLayout>
 
     <ListView
