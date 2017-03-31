@@ -59,29 +59,45 @@ public class CommentsDataSource {
         // VALUES (value1, value2, value3, ...);
         long insertId = database.insert(MySQLiteHelper.TABLE_COMMENTS, null,
                 values);
+        // Maps the database query to the cursor
+        // query(String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy, String limit)
         Cursor cursor = database.query(MySQLiteHelper.TABLE_COMMENTS,
                 allColumns, MySQLiteHelper.COLUMN_ID + " = " + insertId, null,
                 null, null, null);
         cursor.moveToFirst();
         Comment newComment = cursorToComment(cursor);
-        cursor.close();
+        cursor.close();  // close the cursor
         return newComment;
     }
 
+    /**
+     * deleteComment() - delete the comment from the comment table in the database
+     * @param comment the comment to be deleted
+     */
     public void deleteComment(Comment comment) {
         long id = comment.getId();
         System.out.println("Comment deleted with id: " + id);
+        // delete query
+        // delete(String table, String whereClause, String[] whereArgs)
+        // SQL DELETE FROM table_name
+        // WHERE condition;
         database.delete(MySQLiteHelper.TABLE_COMMENTS, MySQLiteHelper.COLUMN_ID
                 + " = " + id, null);
     }
 
+    /**
+     * getAllComments() - gets a list of all the comments in the database
+     * @return returns the list of comments
+     */
     public List<Comment> getAllComments() {
         List<Comment> comments = new ArrayList<Comment>();
-
+        // query the database to for all of the field for all of the records in the comment table
+        // query(String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy, String limit)
         Cursor cursor = database.query(MySQLiteHelper.TABLE_COMMENTS,
                 allColumns, null, null, null, null, null);
 
         cursor.moveToFirst();
+        // loop through the cursor converting each row into a comment object and adding to the list of comments
         while (!cursor.isAfterLast()) {
             Comment comment = cursorToComment(cursor);
             comments.add(comment);
@@ -92,9 +108,14 @@ public class CommentsDataSource {
         return comments;
     }
 
+    /**
+     * cursorToComment() - converts the current record the cursor points to into a comment object
+     * @param cursor points to a record in the comment table
+     * @return a comment object
+     */
     private Comment cursorToComment(Cursor cursor) {
         Comment comment = new Comment();
-        comment.setId(cursor.getLong(0));
+        comment.setId(cursor.getLong(cursor.getColumnIndex(MySQLiteHelper.COLUMN_ID)));
         comment.setComment(cursor.getString(1));
         return comment;
     }

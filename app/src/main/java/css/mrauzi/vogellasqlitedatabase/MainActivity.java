@@ -8,8 +8,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 
+/**
+ * MainActivity -
+ */
 public class MainActivity extends ListActivity {
-    private CommentsDataSource datasource;
+    private CommentsDataSource datasource;  // instance of the CommentsDataSource data access object class for the database
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -17,7 +20,7 @@ public class MainActivity extends ListActivity {
         setContentView(R.layout.activity_main);
 
         datasource = new CommentsDataSource(this);
-        datasource.open();
+        datasource.open();  // opens the database
 
         List<Comment> values = datasource.getAllComments();
 
@@ -28,13 +31,17 @@ public class MainActivity extends ListActivity {
         setListAdapter(adapter);
     }
 
-    // Will be called via the onClick attribute
-    // of the buttons in main.xml
+    /**
+     * onClick() - Will be called via the onClick attribute of the buttons in main.xml
+     *
+     * @param view
+     */
     public void onClick(View view) {
         @SuppressWarnings("unchecked")
         ArrayAdapter<Comment> adapter = (ArrayAdapter<Comment>) getListAdapter();
         Comment comment = null;
         switch (view.getId()) {
+            // allows user to add a comment to the comment
             case R.id.add:
                 String[] comments = new String[] { "Cool", "Very nice", "Hate it" };
                 int nextInt = new Random().nextInt(3);
@@ -43,8 +50,10 @@ public class MainActivity extends ListActivity {
                 adapter.add(comment);
                 break;
             case R.id.delete:
+                // allows the user to delete a comment
                 if (getListAdapter().getCount() > 0) {
                     comment = (Comment) getListAdapter().getItem(0);
+                    // deletes comment from database
                     datasource.deleteComment(comment);
                     adapter.remove(comment);
                 }
@@ -53,12 +62,18 @@ public class MainActivity extends ListActivity {
         adapter.notifyDataSetChanged();
     }
 
+    /**
+     * onResume() - opens the database when the app is resumed
+     */
     @Override
     protected void onResume() {
         datasource.open();
         super.onResume();
     }
 
+    /**
+     * onPause() - closes the database when the app is paused
+     */
     @Override
     protected void onPause() {
         datasource.close();

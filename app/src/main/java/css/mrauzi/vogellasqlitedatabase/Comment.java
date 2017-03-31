@@ -10,6 +10,7 @@ public class Comment {
     private long id;  // the id of the comment
     private String comment;  // the string of the comment itself
 
+
     /**
      * getId() - returns the id of the comment
      * @return the id of the comment
